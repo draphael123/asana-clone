@@ -8,12 +8,17 @@ const nextConfig = {
       bodySizeLimit: '10mb',
     },
   },
+  transpilePackages: ['jose'],
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
       }
+    }
+    // Fix for jose package exports
+    config.resolve.extensionAlias = {
+      '.js': ['.js', '.ts', '.tsx'],
     }
     return config
   },
